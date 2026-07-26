@@ -88,15 +88,50 @@
 
   <section class="max-w-6xl mx-auto px-6 pt-16 pb-12">
     <h1 class="text-5xl font-black mb-4">Nightlife <span class="text-brandGold">Concierge</span></h1>
-    <p class="text-neutral-400 text-lg max-w-2xl mb-8">Dedicated 24/7 chauffeur service for club hops, bachelor parties, and evening dining.</p>
+    <p class="text-neutral-400 text-lg max-w-2xl mb-8">Dedicated 24/7 private chauffeur packages for nightclub hops, bachelor parties, and luxury dining across Punta Cana.</p>
+    
     <div class="rounded-2xl overflow-hidden border border-neutral-800 mb-12">
       <img src="nightlife-club.webp" alt="Punta Cana Nightlife Club" class="w-full h-[380px] object-cover">
     </div>
-    <div class="bg-brandCard border border-brandGold/40 rounded-2xl p-8 max-w-2xl mb-12">
-      <h2 class="text-2xl font-bold mb-2">Full Night Chauffeur Package</h2>
-      <p class="text-neutral-400 text-sm mb-6">Dedicated SUV driver on standby for up to 8 hours with unlimited stops between Cap Cana and Bávaro nightlife venues.</p>
-      <div class="text-3xl font-black text-brandGold mb-6"><span data-usd-min="300" data-usd-max="450">$300 - $450+</span> / day</div>
-      <a href="https://wa.me/18099283711?text=Inquire%20Nightlife%20Chauffeur" target="_blank" class="inline-block bg-brandGold text-black font-extrabold px-6 py-3 rounded-xl hover:bg-yellow-400 transition text-sm">Reserve Chauffeur</a>
+
+    <div class="grid md:grid-cols-2 gap-8 mb-16">
+      <!-- Full Night Chauffeur Package -->
+      <div class="bg-brandCard border border-brandGold/40 rounded-2xl p-8 flex flex-col justify-between">
+        <div>
+          <div class="text-xs font-bold text-brandGold uppercase tracking-widest mb-1">VIP Service</div>
+          <h2 class="text-2xl font-bold mb-2">Full Night Chauffeur Package</h2>
+          <p class="text-neutral-400 text-xs mb-6">Dedicated luxury SUV on standby for up to 8 hours with unlimited venue stops between Cap Cana, Bávaro, and El Cortecito.</p>
+          
+          <ul class="text-xs text-neutral-300 space-y-2 mb-6 border-y border-neutral-800 py-4">
+            <li class="flex items-center gap-2">✓ Driver waiting outside every venue</li>
+            <li class="flex items-center gap-2">✓ Chilled Presidente beer onboard</li>
+            <li class="flex items-center gap-2">✓ Zero surge pricing at club close</li>
+            <li class="flex items-center gap-2">✓ VIP table entry assistance</li>
+          </ul>
+
+          <div class="text-3xl font-black text-brandGold mb-6"><span data-usd-min="300" data-usd-max="450">$300 - $450+</span> / day</div>
+        </div>
+        <a href="https://wa.me/18099283711?text=Inquire%20Nightlife%20Chauffeur" target="_blank" class="block text-center bg-brandGold text-black font-extrabold py-3.5 rounded-xl hover:bg-yellow-400 transition text-sm">Reserve Chauffeur</a>
+      </div>
+
+      <!-- Bachelor Party & Group Logistics -->
+      <div class="bg-brandCard border border-neutral-800 rounded-2xl p-8 flex flex-col justify-between">
+        <div>
+          <div class="text-xs font-bold text-brandGold uppercase tracking-widest mb-1">Group Logistics</div>
+          <h2 class="text-2xl font-bold mb-2">Bachelor & Party Sprinter</h2>
+          <p class="text-neutral-400 text-xs mb-6">High-capacity 15-passenger Mercedes Sprinter van for large groups attending beach clubs, boat charters, and clubs.</p>
+          
+          <ul class="text-xs text-neutral-300 space-y-2 mb-6 border-y border-neutral-800 py-4">
+            <li class="flex items-center gap-2">✓ High-roof extended luggage bay</li>
+            <li class="flex items-center gap-2">✓ Bluetooth surround system for party audio</li>
+            <li class="flex items-center gap-2">✓ Villa-to-marina catamaran charter pickups</li>
+            <li class="flex items-center gap-2">✓ Coordinated roundtrip timing</li>
+          </ul>
+
+          <div class="text-2xl font-black text-white mb-6">Custom Group Quotes</div>
+        </div>
+        <a href="https://wa.me/18099283711?text=Inquire%20Party%20Sprinter" target="_blank" class="block text-center bg-neutral-900 hover:bg-brandGold hover:text-black font-bold py-3.5 rounded-xl transition text-sm border border-neutral-800">Inquire Party Sprinter</a>
+      </div>
     </div>
   </section>
 
@@ -115,34 +150,22 @@
     </div>
   </footer>
 
-  <!-- Hidden Google Translate Engine -->
+  <!-- Hidden Google Translate Engine & Banner Suppression -->
   <div id="google_translate_element" style="display:none;"></div>
   <style>
-    /* Suppress Google Translate top banner iframe entirely */
-    .goog-te-banner-frame,
-    .goog-te-banner,
-    iframe.goog-te-banner-frame,
-    iframe[id*=":1.container"],
-    iframe[id*=":2.container"],
-    iframe[class*="goog"],
-    .skiptranslate > iframe,
-    #goog-gt-tt,
-    .goog-te-balloon-frame {
+    .goog-te-banner-frame, .goog-te-banner, iframe.goog-te-banner-frame, iframe[id*=":1.container"], iframe[id*=":2.container"], iframe[class*="goog"], .skiptranslate > iframe, #goog-gt-tt, .goog-te-balloon-frame {
       display: none !important;
       visibility: hidden !important;
       opacity: 0 !important;
       height: 0 !important;
       width: 0 !important;
     }
-    
-    /* Prevent Google from pushing page down with top margin/padding */
     body, html {
       top: 0px !important;
       position: static !important;
       margin-top: 0px !important;
       padding-top: 0px !important;
     }
-    
     .goog-text-highlight {
       background-color: transparent !important;
       box-shadow: none !important;
@@ -173,10 +196,8 @@
       const setGoogleTranslateCookie = (lang) => {
         if (lang === 'en') {
           document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-          document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=" + window.location.hostname;
         } else {
           document.cookie = `googtrans=/en/${lang}; path=/;`;
-          document.cookie = `googtrans=/en/${lang}; path=/; domain=${window.location.hostname}`;
         }
       };
 
@@ -189,7 +210,6 @@
       const validLangs = ['en', 'es', 'fr', 'de', 'it'];
       const validCurrs = ['USD', 'EUR', 'CAD', 'GBP', 'DOP'];
 
-      // Read URL Params
       const urlParams = new URLSearchParams(window.location.search);
       let urlLang = urlParams.get('lang')?.toLowerCase();
       let urlCurr = urlParams.get('curr')?.toUpperCase();
@@ -218,7 +238,6 @@
         activeCurr = localStorage.getItem('og_vip_currency');
       }
 
-      // Auto-Detect Fallback
       const hasManualOverride = localStorage.getItem('og_vip_manual_override') === 'true';
       if ((!activeLang || !activeCurr) && !hasManualOverride) {
         const userLang = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
@@ -249,13 +268,11 @@
       if (currencySelect) currencySelect.value = activeCurr;
       if (langSelect) langSelect.value = activeLang;
 
-      // Update URL search parameters in address bar
       const currentUrl = new URL(window.location.href);
       currentUrl.searchParams.set('lang', activeLang);
       currentUrl.searchParams.set('curr', activeCurr);
       window.history.replaceState({}, '', currentUrl.toString());
 
-      // Append query params to internal page links
       document.querySelectorAll('a[href]').forEach(a => {
         const href = a.getAttribute('href');
         if (href && !href.startsWith('http') && !href.startsWith('https://wa.me') && !href.startsWith('#') && !href.startsWith('mailto:')) {
@@ -268,7 +285,6 @@
         }
       });
 
-      // Price Converter
       const updatePrices = (curr) => {
         const rate = rates[curr] || 1.0;
         const sym = symbols[curr] || '$';
@@ -294,7 +310,6 @@
 
       updatePrices(activeCurr);
 
-      // Handlers
       if (currencySelect) {
         currencySelect.addEventListener('change', (e) => {
           const newCurr = e.target.value;
@@ -327,7 +342,6 @@
         });
       }
 
-      // Mobile Menu Toggle
       const menuBtn = document.getElementById('menu-btn');
       const mobileMenu = document.getElementById('mobile-menu');
       if (menuBtn && mobileMenu) {

@@ -88,21 +88,47 @@
 
   <section class="max-w-6xl mx-auto px-6 pt-16 pb-12">
     <h1 class="text-5xl font-black mb-4">The <span class="text-brandGold">Black Fleet</span></h1>
-    <p class="text-neutral-400 text-lg max-w-2xl mb-12">Pristine obsidian black vehicles detailed daily for private airport runs and group travel.</p>
+    <p class="text-neutral-400 text-lg max-w-2xl mb-12">Pristine obsidian black vehicles detailed daily for airport runs, resort excursions, and private group travel.</p>
+    
     <div class="grid md:grid-cols-2 gap-8 mb-16">
-      <div class="bg-brandCard border border-neutral-800 rounded-2xl overflow-hidden p-6">
-        <img src="about-suburban.webp" alt="Executive SUV Fleet" class="w-full h-60 object-cover rounded-xl mb-6">
-        <h2 class="text-2xl font-bold mb-2">Luxury Executive SUVs</h2>
-        <p class="text-xs text-neutral-400 mb-4">Cadillac Escalade ESV / Chevrolet Suburban (Up to 5 passengers + luggage)</p>
-        <div class="text-2xl font-black text-brandGold mb-6"><span data-usd-min="70" data-usd-max="90">$70 - $90+</span> base rate</div>
-        <a href="https://wa.me/18099283711?text=Inquire%20SUV%20Fleet" target="_blank" class="block text-center bg-brandGold text-black font-extrabold py-3 rounded-xl hover:bg-yellow-400 transition text-sm">Reserve SUV</a>
+      <!-- Luxury SUV Card -->
+      <div class="bg-brandCard border border-neutral-800 rounded-2xl overflow-hidden p-6 flex flex-col justify-between">
+        <div>
+          <img src="about-suburban.webp" alt="Executive SUV Fleet" class="w-full h-64 object-cover rounded-xl mb-6">
+          <div class="text-xs font-bold text-brandGold uppercase tracking-widest mb-1">Executive Fleet</div>
+          <h2 class="text-2xl font-bold mb-2">Luxury Executive SUV</h2>
+          <p class="text-xs text-neutral-400 mb-6">Cadillac Escalade ESV / Chevrolet Suburban (Up to 5 Passengers + 6 Full Suitcases)</p>
+          
+          <ul class="text-xs text-neutral-300 space-y-2 mb-6 border-y border-neutral-800 py-4">
+            <li class="flex items-center gap-2">✓ Dark ceramic privacy glass</li>
+            <li class="flex items-center gap-2">✓ Chilled Presidente beer & spring water</li>
+            <li class="flex items-center gap-2">✓ Bluetooth audio & dual climate control</li>
+            <li class="flex items-center gap-2">✓ Flight delay tracking & toll coverage</li>
+          </ul>
+
+          <div class="text-2xl font-black text-brandGold mb-6"><span data-usd-min="70" data-usd-max="90">$70 - $90+</span> base rate</div>
+        </div>
+        <a href="https://wa.me/18099283711?text=Inquire%20SUV%20Fleet" target="_blank" class="block text-center bg-brandGold text-black font-extrabold py-3.5 rounded-xl hover:bg-yellow-400 transition text-sm">Reserve Executive SUV</a>
       </div>
-      <div class="bg-brandCard border border-neutral-800 rounded-2xl overflow-hidden p-6">
-        <img src="fleet-sprinter.webp" alt="Mercedes Sprinter VIP" class="w-full h-60 object-cover rounded-xl mb-6">
-        <h2 class="text-2xl font-bold mb-2">Mercedes Sprinter VIP</h2>
-        <p class="text-xs text-neutral-400 mb-4">High-roof passenger van with leather captain seating (Up to 15 passengers)</p>
-        <div class="text-2xl font-black text-brandGold mb-6"><span data-usd-min="150" data-usd-max="220">$150 - $220+</span> starting rate</div>
-        <a href="https://wa.me/18099283711?text=Inquire%20Sprinter%20Fleet" target="_blank" class="block text-center bg-brandGold text-black font-extrabold py-3 rounded-xl hover:bg-yellow-400 transition text-sm">Reserve Sprinter</a>
+
+      <!-- Mercedes Sprinter VIP Card -->
+      <div class="bg-brandCard border border-neutral-800 rounded-2xl overflow-hidden p-6 flex flex-col justify-between">
+        <div>
+          <img src="fleet-sprinter.webp" alt="Mercedes Sprinter VIP" class="w-full h-64 object-cover rounded-xl mb-6">
+          <div class="text-xs font-bold text-brandGold uppercase tracking-widest mb-1">Group Fleet</div>
+          <h2 class="text-2xl font-bold mb-2">Mercedes Sprinter VIP</h2>
+          <p class="text-xs text-neutral-400 mb-6">Custom Passenger Van with High Roof (Up to 15 Passengers + Extended Luggage Space)</p>
+
+          <ul class="text-xs text-neutral-300 space-y-2 mb-6 border-y border-neutral-800 py-4">
+            <li class="flex items-center gap-2">✓ Plush leather captain seating</li>
+            <li class="flex items-center gap-2">✓ Ambient LED lighting & onboard cooler</li>
+            <li class="flex items-center gap-2">✓ High-capacity rear luggage compartment</li>
+            <li class="flex items-center gap-2">✓ Ideal for weddings, bachelors, & villa groups</li>
+          </ul>
+
+          <div class="text-2xl font-black text-brandGold mb-6"><span data-usd-min="150" data-usd-max="220">$150 - $220+</span> starting rate</div>
+        </div>
+        <a href="https://wa.me/18099283711?text=Inquire%20Sprinter%20Fleet" target="_blank" class="block text-center bg-brandGold text-black font-extrabold py-3.5 rounded-xl hover:bg-yellow-400 transition text-sm">Reserve Sprinter VIP</a>
       </div>
     </div>
   </section>
@@ -122,34 +148,22 @@
     </div>
   </footer>
 
-  <!-- Hidden Google Translate Engine -->
+  <!-- Hidden Google Translate Engine & Banner Suppression -->
   <div id="google_translate_element" style="display:none;"></div>
   <style>
-    /* Suppress Google Translate top banner iframe entirely */
-    .goog-te-banner-frame,
-    .goog-te-banner,
-    iframe.goog-te-banner-frame,
-    iframe[id*=":1.container"],
-    iframe[id*=":2.container"],
-    iframe[class*="goog"],
-    .skiptranslate > iframe,
-    #goog-gt-tt,
-    .goog-te-balloon-frame {
+    .goog-te-banner-frame, .goog-te-banner, iframe.goog-te-banner-frame, iframe[id*=":1.container"], iframe[id*=":2.container"], iframe[class*="goog"], .skiptranslate > iframe, #goog-gt-tt, .goog-te-balloon-frame {
       display: none !important;
       visibility: hidden !important;
       opacity: 0 !important;
       height: 0 !important;
       width: 0 !important;
     }
-    
-    /* Prevent Google from pushing page down with top margin/padding */
     body, html {
       top: 0px !important;
       position: static !important;
       margin-top: 0px !important;
       padding-top: 0px !important;
     }
-    
     .goog-text-highlight {
       background-color: transparent !important;
       box-shadow: none !important;
@@ -180,10 +194,8 @@
       const setGoogleTranslateCookie = (lang) => {
         if (lang === 'en') {
           document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-          document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=" + window.location.hostname;
         } else {
           document.cookie = `googtrans=/en/${lang}; path=/;`;
-          document.cookie = `googtrans=/en/${lang}; path=/; domain=${window.location.hostname}`;
         }
       };
 
@@ -196,7 +208,6 @@
       const validLangs = ['en', 'es', 'fr', 'de', 'it'];
       const validCurrs = ['USD', 'EUR', 'CAD', 'GBP', 'DOP'];
 
-      // Read URL Params
       const urlParams = new URLSearchParams(window.location.search);
       let urlLang = urlParams.get('lang')?.toLowerCase();
       let urlCurr = urlParams.get('curr')?.toUpperCase();
@@ -225,7 +236,6 @@
         activeCurr = localStorage.getItem('og_vip_currency');
       }
 
-      // Auto-Detect Fallback
       const hasManualOverride = localStorage.getItem('og_vip_manual_override') === 'true';
       if ((!activeLang || !activeCurr) && !hasManualOverride) {
         const userLang = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
@@ -256,13 +266,11 @@
       if (currencySelect) currencySelect.value = activeCurr;
       if (langSelect) langSelect.value = activeLang;
 
-      // Update URL search parameters in address bar
       const currentUrl = new URL(window.location.href);
       currentUrl.searchParams.set('lang', activeLang);
       currentUrl.searchParams.set('curr', activeCurr);
       window.history.replaceState({}, '', currentUrl.toString());
 
-      // Append query params to internal page links
       document.querySelectorAll('a[href]').forEach(a => {
         const href = a.getAttribute('href');
         if (href && !href.startsWith('http') && !href.startsWith('https://wa.me') && !href.startsWith('#') && !href.startsWith('mailto:')) {
@@ -275,7 +283,6 @@
         }
       });
 
-      // Price Converter
       const updatePrices = (curr) => {
         const rate = rates[curr] || 1.0;
         const sym = symbols[curr] || '$';
@@ -301,7 +308,6 @@
 
       updatePrices(activeCurr);
 
-      // Handlers
       if (currencySelect) {
         currencySelect.addEventListener('change', (e) => {
           const newCurr = e.target.value;
@@ -334,7 +340,6 @@
         });
       }
 
-      // Mobile Menu Toggle
       const menuBtn = document.getElementById('menu-btn');
       const mobileMenu = document.getElementById('mobile-menu');
       if (menuBtn && mobileMenu) {
