@@ -156,82 +156,7 @@
 
   
 
-  <!-- Currency Converter & Mobile Menu Script -->
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const rates = { USD: 1.0, EUR: 0.92, CAD: 1.37, DOP: 60.0 };
-      const symbols = { USD: '$', EUR: '€', CAD: 'CA$', DOP: 'RD$ ' };
-      const currencySelect = document.getElementById('currency-select');
-
-      if (currencySelect) {
-        currencySelect.addEventListener('change', (e) => {
-          const selected = e.target.value;
-          const rate = rates[selected];
-          const symbol = symbols[selected];
-
-          // Dynamic range conversion
-          document.querySelectorAll('[data-usd-min]').forEach(el => {
-            const minVal = parseFloat(el.getAttribute('data-usd-min'));
-            const maxVal = parseFloat(el.getAttribute('data-usd-max'));
-            if (!isNaN(minVal) && !isNaN(maxVal)) {
-              const convMin = Math.round(minVal * rate);
-              const convMax = Math.round(maxVal * rate);
-              el.textContent = `${symbol}${convMin.toLocaleString()} - ${symbol}${convMax.toLocaleString()}+`;
-            }
-          });
-
-          // Single value conversion
-          document.querySelectorAll('[data-usd]').forEach(el => {
-            const usdVal = parseFloat(el.getAttribute('data-usd'));
-            if (!isNaN(usdVal)) {
-              const converted = Math.round(usdVal * rate);
-              el.textContent = `${symbol}${converted.toLocaleString()}`;
-            }
-          });
-        });
-      }
-
-      
-      // Language Selector Handler
-      const langSelect = document.getElementById('language-select');
-      if (langSelect) {
-        const getCookie = (name) => {
-          const value = `; ${document.cookie}`;
-          const parts = value.split(`; ${name}=`);
-          if (parts.length === 2) return parts.pop().split(';').shift();
-        };
-
-        const currentTrans = getCookie('googtrans');
-        if (currentTrans) {
-          const langCode = currentTrans.split('/').pop();
-          if (['en', 'es', 'fr', 'de', 'it'].includes(langCode)) {
-            langSelect.value = langCode;
-          }
-        }
-
-        langSelect.addEventListener('change', (e) => {
-          const lang = e.target.value;
-          if (lang === 'en') {
-            document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-            document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=" + window.location.hostname;
-          } else {
-            document.cookie = `googtrans=/en/${lang}; path=/;`;
-            document.cookie = `googtrans=/en/${lang}; path=/; domain=${window.location.hostname}`;
-          }
-          location.reload();
-        });
-      }
-
-      // Mobile Menu Toggle
-      const menuBtn = document.getElementById('menu-btn');
-      const mobileMenu = document.getElementById('mobile-menu');
-      if (menuBtn && mobileMenu) {
-        menuBtn.addEventListener('click', () => {
-          mobileMenu.classList.toggle('hidden');
-        });
-      }
-    });
-  </script>
+  
 
 
   <!-- Hidden Google Translate Engine & Styling -->
@@ -252,5 +177,116 @@
   </script>
   <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
+<!-- Unified Currency & Auto Language Sync Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const rates = { USD: 1.0, EUR: 0.92, CAD: 1.37, DOP: 60.0 };
+      const symbols = {
+        USD: '$',
+        EUR: '€',
+        CAD: 'CA$',
+        DOP: 'RD$ '
+      };
+
+      const currencyToLang = {
+        USD: 'en',
+        DOP: 'es',
+        CAD: 'en',
+        EUR: 'de'
+      };
+
+      const currencySelect = document.getElementById('currency-select');
+      const langSelect = document.getElementById('language-select');
+
+      const setGoogleTranslateCookie = (lang) => {
+        if (lang === 'en') {
+          document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+          document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=" + window.location.hostname;
+        } else {
+          document.cookie = `googtrans=/en/${lang}; path=/;`;
+          document.cookie = `googtrans=/en/${lang}; path=/; domain=${window.location.hostname}`;
+        }
+      };
+
+      const getCookie = (name) => {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+      };
+
+      // Sync Language dropdown state with active translation cookie
+      const currentTrans = getCookie('googtrans');
+      if (currentTrans && langSelect) {
+        const langCode = currentTrans.split('/').pop();
+        if (['en', 'es', 'fr', 'de', 'it'].includes(langCode)) {
+          langSelect.value = langCode;
+        }
+      }
+
+      // Convert price tags using native currency formatting
+      const updatePrices = (selectedCurrency) => {
+        const rate = rates[selectedCurrency] || 1.0;
+        const sym = symbols[selectedCurrency] || symbols.USD;
+
+        document.querySelectorAll('[data-usd-min]').forEach(el => {
+          const minVal = parseFloat(el.getAttribute('data-usd-min'));
+          const maxVal = parseFloat(el.getAttribute('data-usd-max'));
+          if (!isNaN(minVal) && !isNaN(maxVal)) {
+            const convMin = Math.round(minVal * rate);
+            const convMax = Math.round(maxVal * rate);
+            el.textContent = `${sym}${convMin.toLocaleString()} - ${sym}${convMax.toLocaleString()}+`;
+          }
+        });
+
+        document.querySelectorAll('[data-usd]').forEach(el => {
+          const usdVal = parseFloat(el.getAttribute('data-usd'));
+          if (!isNaN(usdVal)) {
+            const converted = Math.round(usdVal * rate);
+            el.textContent = `${sym}${converted.toLocaleString()}`;
+          }
+        });
+      };
+
+      // Handle currency switch with auto language match
+      if (currencySelect) {
+        currencySelect.addEventListener('change', (e) => {
+          const curr = e.target.value;
+          updatePrices(curr);
+
+          let targetLang = currencyToLang[curr];
+          if (curr === 'CAD' && langSelect && langSelect.value === 'fr') {
+            targetLang = 'fr';
+          }
+          if (curr === 'EUR' && langSelect && ['fr', 'it', 'es', 'de'].includes(langSelect.value)) {
+            targetLang = langSelect.value;
+          }
+
+          if (targetLang && langSelect && langSelect.value !== targetLang) {
+            langSelect.value = targetLang;
+            setGoogleTranslateCookie(targetLang);
+            location.reload();
+          }
+        });
+      }
+
+      // Handle manual language change
+      if (langSelect) {
+        langSelect.addEventListener('change', (e) => {
+          const lang = e.target.value;
+          setGoogleTranslateCookie(lang);
+          location.reload();
+        });
+      }
+
+      // Mobile Menu Toggle
+      const menuBtn = document.getElementById('menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+      if (menuBtn && mobileMenu) {
+        menuBtn.addEventListener('click', () => {
+          mobileMenu.classList.toggle('hidden');
+        });
+      }
+    });
+  </script>
 </body>
 </html>
