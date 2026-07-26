@@ -49,13 +49,15 @@
 
       <!-- Always Visible Header Actions -->
       <div class="flex items-center gap-2 sm:gap-3">
-        <!-- Currency Selector -->
+                <!-- Currency Selector -->
         <select id="currency-select" class="bg-neutral-900 border border-neutral-800 text-brandGold text-xs font-bold rounded-lg px-2 py-1.5 focus:outline-none focus:border-brandGold cursor-pointer">
           <option value="USD">USD ($)</option>
           <option value="EUR">EUR (€)</option>
           <option value="CAD">CAD (CA$)</option>
+          <option value="GBP">GBP (£)</option>
           <option value="DOP">DOP (RD$)</option>
         </select>
+
         <!-- Language Selector -->
         <select id="language-select" class="bg-neutral-900 border border-neutral-800 text-brandGold text-xs font-bold rounded-lg px-2 py-1.5 focus:outline-none focus:border-brandGold cursor-pointer">
           <option value="en">EN 🇺🇸</option>
@@ -201,22 +203,42 @@
   </script>
   <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
-<!-- Unified Currency & Auto Language Sync Script -->
+
+<!-- Persistent Currency & Language Switcher Script -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const rates = { USD: 1.0, EUR: 0.92, CAD: 1.37, DOP: 60.0 };
+      const rates = {
+        USD: 1.0,
+        EUR: 0.92,
+        CAD: 1.37,
+        GBP: 0.78,
+        DOP: 60.0
+      };
+
       const symbols = {
         USD: '$',
         EUR: '€',
         CAD: 'CA$',
+        GBP: '£',
         DOP: 'RD$ '
       };
 
+      // Default language match per currency
       const currencyToLang = {
         USD: 'en',
-        DOP: 'es',
         CAD: 'en',
+        GBP: 'en',
+        DOP: 'es',
         EUR: 'de'
+      };
+
+      // Default currency match per language
+      const langToCurrency = {
+        en: 'USD',
+        es: 'DOP',
+        fr: 'EUR',
+        de: 'EUR',
+        it: 'EUR'
       };
 
       const currencySelect = document.getElementById('currency-select');
@@ -238,19 +260,27 @@
         if (parts.length === 2) return parts.pop().split(';').shift();
       };
 
-      // Sync Language dropdown state with active translation cookie
+      // 1. Restore active currency from localStorage
+      let activeCurrency = localStorage.getItem('og_vip_currency') || 'USD';
+
+      // 2. Restore active language from cookie
       const currentTrans = getCookie('googtrans');
-      if (currentTrans && langSelect) {
+      let activeLang = 'en';
+      if (currentTrans) {
         const langCode = currentTrans.split('/').pop();
         if (['en', 'es', 'fr', 'de', 'it'].includes(langCode)) {
-          langSelect.value = langCode;
+          activeLang = langCode;
         }
       }
 
-      // Convert price tags using native currency formatting
-      const updatePrices = (selectedCurrency) => {
-        const rate = rates[selectedCurrency] || 1.0;
-        const sym = symbols[selectedCurrency] || symbols.USD;
+      // Set dropdown visual states
+      if (currencySelect) currencySelect.value = activeCurrency;
+      if (langSelect) langSelect.value = activeLang;
+
+      // 3. Price conversion renderer
+      const updatePrices = (curr) => {
+        const rate = rates[curr] || 1.0;
+        const sym = symbols[curr] || '$';
 
         document.querySelectorAll('[data-usd-min]').forEach(el => {
           const minVal = parseFloat(el.getAttribute('data-usd-min'));
@@ -271,21 +301,21 @@
         });
       };
 
-      // Handle currency switch with auto language match
+      // Render converted prices on initial load
+      updatePrices(activeCurrency);
+
+      // 4. Currency dropdown handler
       if (currencySelect) {
         currencySelect.addEventListener('change', (e) => {
-          const curr = e.target.value;
-          updatePrices(curr);
+          const newCurr = e.target.value;
+          localStorage.setItem('og_vip_currency', newCurr);
+          updatePrices(newCurr);
 
-          let targetLang = currencyToLang[curr];
-          if (curr === 'CAD' && langSelect && langSelect.value === 'fr') {
-            targetLang = 'fr';
-          }
-          if (curr === 'EUR' && langSelect && ['fr', 'it', 'es', 'de'].includes(langSelect.value)) {
-            targetLang = langSelect.value;
-          }
+          let targetLang = currencyToLang[newCurr];
+          if (newCurr === 'CAD' && activeLang === 'fr') targetLang = 'fr';
+          if (newCurr === 'EUR' && ['fr', 'it', 'de', 'es'].includes(activeLang)) targetLang = activeLang;
 
-          if (targetLang && langSelect && langSelect.value !== targetLang) {
+          if (langSelect && activeLang !== targetLang) {
             langSelect.value = targetLang;
             setGoogleTranslateCookie(targetLang);
             location.reload();
@@ -293,16 +323,25 @@
         });
       }
 
-      // Handle manual language change
+      // 5. Language dropdown handler
       if (langSelect) {
         langSelect.addEventListener('change', (e) => {
-          const lang = e.target.value;
-          setGoogleTranslateCookie(lang);
+          const newLang = e.target.value;
+          setGoogleTranslateCookie(newLang);
+
+          let targetCurr = langToCurrency[newLang];
+          if (newLang === 'fr' && activeCurrency === 'CAD') targetCurr = 'CAD';
+          if (newLang === 'en' && ['CAD', 'GBP'].includes(activeCurrency)) targetCurr = activeCurrency;
+
+          if (targetCurr) {
+            localStorage.setItem('og_vip_currency', targetCurr);
+          }
+
           location.reload();
         });
       }
 
-      // Mobile Menu Toggle
+      // 6. Mobile Menu Toggle
       const menuBtn = document.getElementById('menu-btn');
       const mobileMenu = document.getElementById('mobile-menu');
       if (menuBtn && mobileMenu) {
