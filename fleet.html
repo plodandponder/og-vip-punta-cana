@@ -1,17 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Black Fleet | Luxury SUVs & Mercedes Sprinter VIP | OG VIP</title>
   <meta name="description" content="Explore our obsidian black fleet in Punta Cana. Featuring Cadillac Escalades, Chevrolet Suburbans, and Mercedes Sprinter VIPs with bluetooth audio and built-in bars.">
   <link rel="icon" type="image/webp" href="favicon.webp">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  
-
-  <!-- Custom Favicon Link -->
-  
-
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -31,9 +25,6 @@
 <body class="bg-brandDark text-white font-sans antialiased selection:bg-brandGold selection:text-black">
 
   <!-- Header / Navigation -->
-    <!-- Header / Navigation -->
-    <!-- Header / Navigation -->
-    <!-- Header / Navigation -->
   <header class="border-b border-neutral-800 bg-black/90 backdrop-blur sticky top-0 z-50">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
       <div class="flex items-center gap-2">
@@ -53,15 +44,83 @@
 
       <!-- Always Visible Header Actions -->
       <div class="flex items-center gap-2 sm:gap-3">
-        
-  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+        <!-- Currency Selector -->
+        <select id="currency-select" class="bg-neutral-900 border border-neutral-800 text-brandGold text-xs font-bold rounded-lg px-2 py-1.5 focus:outline-none focus:border-brandGold cursor-pointer">
+          <option value="USD">USD ($)</option>
+          <option value="EUR">EUR (€)</option>
+          <option value="CAD">CAD (CA$)</option>
+          <option value="GBP">GBP (£)</option>
+          <option value="DOP">DOP (RD$)</option>
+        </select>
 
+        <!-- Language Selector -->
+        <select id="language-select" class="bg-neutral-900 border border-neutral-800 text-brandGold text-xs font-bold rounded-lg px-2 py-1.5 focus:outline-none focus:border-brandGold cursor-pointer">
+          <option value="en">EN 🇺🇸</option>
+          <option value="es">ES 🇩🇴</option>
+          <option value="fr">FR 🇫🇷</option>
+          <option value="de">DE 🇩🇪</option>
+          <option value="it">IT 🇮🇹</option>
+        </select>
 
+        <a href="https://wa.me/18099283711?text=I%20want%20to%20book%20a%20VIP%20transfer" target="_blank" class="bg-brandGold text-black font-extrabold text-xs sm:text-sm px-3 sm:px-4 py-2 rounded-lg hover:bg-yellow-400 transition shadow-lg shadow-yellow-500/10 whitespace-nowrap">
+          WhatsApp
+        </a>
 
-  
-  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-  
+        <!-- Mobile Hamburger Button -->
+        <button id="menu-btn" class="md:hidden text-neutral-300 hover:text-brandGold focus:outline-none p-2 rounded-lg bg-neutral-900 border border-neutral-800" aria-label="Toggle Navigation">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
 
+    <!-- Mobile Dropdown Menu -->
+    <div id="mobile-menu" class="hidden md:hidden border-t border-neutral-800 bg-black/95 px-6 py-4 flex flex-col gap-3 text-base font-semibold text-neutral-300">
+      <a href="index.html" class="hover:text-brandGold transition py-2 border-b border-neutral-900">Home</a>
+      <a href="about.html" class="hover:text-brandGold transition py-2 border-b border-neutral-900">About</a>
+      <a href="fleet.html" class="text-brandGold py-2 border-b border-neutral-900">Fleet</a>
+      <a href="rates.html" class="hover:text-brandGold transition py-2 border-b border-neutral-900">Rates</a>
+      <a href="nightlife.html" class="hover:text-brandGold transition py-2 border-b border-neutral-900">Nightlife Concierge</a>
+      <a href="contact.html" class="hover:text-brandGold transition py-2 border-b border-neutral-900">Contact</a>
+    </div>
+  </header>
+
+  <section class="max-w-6xl mx-auto px-6 pt-16 pb-12">
+    <h1 class="text-5xl font-black mb-4">The <span class="text-brandGold">Black Fleet</span></h1>
+    <p class="text-neutral-400 text-lg max-w-2xl mb-12">Pristine obsidian black vehicles detailed daily for private airport runs and group travel.</p>
+    <div class="grid md:grid-cols-2 gap-8 mb-16">
+      <div class="bg-brandCard border border-neutral-800 rounded-2xl overflow-hidden p-6">
+        <img src="about-suburban.webp" alt="Executive SUV Fleet" class="w-full h-60 object-cover rounded-xl mb-6">
+        <h2 class="text-2xl font-bold mb-2">Luxury Executive SUVs</h2>
+        <p class="text-xs text-neutral-400 mb-4">Cadillac Escalade ESV / Chevrolet Suburban (Up to 5 passengers + luggage)</p>
+        <div class="text-2xl font-black text-brandGold mb-6"><span data-usd-min="70" data-usd-max="90">$70 - $90+</span> base rate</div>
+        <a href="https://wa.me/18099283711?text=Inquire%20SUV%20Fleet" target="_blank" class="block text-center bg-brandGold text-black font-extrabold py-3 rounded-xl hover:bg-yellow-400 transition text-sm">Reserve SUV</a>
+      </div>
+      <div class="bg-brandCard border border-neutral-800 rounded-2xl overflow-hidden p-6">
+        <img src="fleet-sprinter.webp" alt="Mercedes Sprinter VIP" class="w-full h-60 object-cover rounded-xl mb-6">
+        <h2 class="text-2xl font-bold mb-2">Mercedes Sprinter VIP</h2>
+        <p class="text-xs text-neutral-400 mb-4">High-roof passenger van with leather captain seating (Up to 15 passengers)</p>
+        <div class="text-2xl font-black text-brandGold mb-6"><span data-usd-min="150" data-usd-max="220">$150 - $220+</span> starting rate</div>
+        <a href="https://wa.me/18099283711?text=Inquire%20Sprinter%20Fleet" target="_blank" class="block text-center bg-brandGold text-black font-extrabold py-3 rounded-xl hover:bg-yellow-400 transition text-sm">Reserve Sprinter</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-neutral-800 bg-black py-8">
+    <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-xs text-neutral-500 gap-4">
+      <div>&copy; 2026 OG VIP Punta Cana. Private Airport Transfers & VIP Fleet.</div>
+      <div class="flex gap-6">
+        <a href="index.html" class="hover:text-neutral-300">Home</a>
+        <a href="about.html" class="hover:text-neutral-300">About</a>
+        <a href="fleet.html" class="hover:text-neutral-300">Fleet</a>
+        <a href="rates.html" class="hover:text-neutral-300">Rates</a>
+        <a href="nightlife.html" class="hover:text-neutral-300">Nightlife</a>
+        <a href="contact.html" class="hover:text-neutral-300">Contact</a>
+      </div>
+    </div>
+  </footer>
 
   <!-- Hidden Google Translate Engine -->
   <div id="google_translate_element" style="display:none;"></div>
@@ -80,7 +139,8 @@
     }
   </script>
   <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-  <!-- Persistent Currency, Language & URL Tracking Engine -->
+
+  <!-- Persistent Currency, Language & URL Tracking Script -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const rates = { USD: 1.0, EUR: 0.92, CAD: 1.37, GBP: 0.78, DOP: 60.0 };
@@ -110,7 +170,7 @@
       const validLangs = ['en', 'es', 'fr', 'de', 'it'];
       const validCurrs = ['USD', 'EUR', 'CAD', 'GBP', 'DOP'];
 
-      // 1. Read URL Parameters
+      // Read URL Params
       const urlParams = new URLSearchParams(window.location.search);
       let urlLang = urlParams.get('lang')?.toLowerCase();
       let urlCurr = urlParams.get('curr')?.toUpperCase();
@@ -139,7 +199,7 @@
         activeCurr = localStorage.getItem('og_vip_currency');
       }
 
-      // 2. Auto-Detection Fallback
+      // Auto-Detect Fallback
       const hasManualOverride = localStorage.getItem('og_vip_manual_override') === 'true';
       if ((!activeLang || !activeCurr) && !hasManualOverride) {
         const userLang = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
@@ -154,10 +214,10 @@
         }
 
         if (!activeCurr) {
-          if (userLang.includes('-ca') || userLang === 'fr-ca' || timeZone.includes('toronto') || timeZone.includes('vancouver') || timeZone.includes('montreal')) activeCurr = 'CAD';
+          if (userLang.includes('-ca') || userLang === 'fr-ca' || timeZone.includes('toronto') || timeZone.includes('vancouver')) activeCurr = 'CAD';
           else if (userLang.includes('-gb') || userLang === 'en-gb' || timeZone.includes('london')) activeCurr = 'GBP';
           else if (userLang.includes('-do') || timeZone.includes('santo_domingo')) { activeCurr = 'DOP'; activeLang = 'es'; }
-          else if (['de', 'it'].some(l => userLang.startsWith(l)) || userLang === 'fr-fr' || userLang === 'es-es' || timeZone.includes('europe')) activeCurr = 'EUR';
+          else if (['de', 'it'].some(l => userLang.startsWith(l)) || userLang === 'fr-fr' || timeZone.includes('europe')) activeCurr = 'EUR';
           else activeCurr = 'USD';
         }
       }
@@ -170,13 +230,13 @@
       if (currencySelect) currencySelect.value = activeCurr;
       if (langSelect) langSelect.value = activeLang;
 
-      // 3. Update Address Bar URL without refresh loops
+      // Update URL search parameters in address bar
       const currentUrl = new URL(window.location.href);
       currentUrl.searchParams.set('lang', activeLang);
       currentUrl.searchParams.set('curr', activeCurr);
       window.history.replaceState({}, '', currentUrl.toString());
 
-      // 4. Attach Query Params to Link hrefs
+      // Append query params to internal page links
       document.querySelectorAll('a[href]').forEach(a => {
         const href = a.getAttribute('href');
         if (href && !href.startsWith('http') && !href.startsWith('https://wa.me') && !href.startsWith('#') && !href.startsWith('mailto:')) {
@@ -189,7 +249,7 @@
         }
       });
 
-      // 5. Render Converted Prices
+      // Price Converter
       const updatePrices = (curr) => {
         const rate = rates[curr] || 1.0;
         const sym = symbols[curr] || '$';
@@ -215,18 +275,14 @@
 
       updatePrices(activeCurr);
 
-      // 6. Currency Change Handler
+      // Handlers
       if (currencySelect) {
         currencySelect.addEventListener('change', (e) => {
           const newCurr = e.target.value;
           localStorage.setItem('og_vip_manual_override', 'true');
           localStorage.setItem('og_vip_currency', newCurr);
 
-          let targetLang = currencyToLang[newCurr];
-          if (newCurr === 'CAD' && activeLang === 'fr') targetLang = 'fr';
-          if (newCurr === 'EUR' && ['fr', 'it', 'de', 'es'].includes(activeLang)) targetLang = activeLang;
-
-          targetLang = targetLang || activeLang;
+          let targetLang = currencyToLang[newCurr] || activeLang;
           setGoogleTranslateCookie(targetLang);
 
           const redirectUrl = new URL(window.location.href);
@@ -236,18 +292,13 @@
         });
       }
 
-      // 7. Language Change Handler
       if (langSelect) {
         langSelect.addEventListener('change', (e) => {
           const newLang = e.target.value;
           localStorage.setItem('og_vip_manual_override', 'true');
           setGoogleTranslateCookie(newLang);
 
-          let targetCurr = langToCurrency[newLang];
-          if (newLang === 'fr' && activeCurr === 'CAD') targetCurr = 'CAD';
-          if (newLang === 'en' && ['CAD', 'GBP'].includes(activeCurr)) targetCurr = activeCurr;
-
-          targetCurr = targetCurr || activeCurr;
+          let targetCurr = langToCurrency[newLang] || activeCurr;
           localStorage.setItem('og_vip_currency', targetCurr);
 
           const redirectUrl = new URL(window.location.href);
@@ -257,7 +308,7 @@
         });
       }
 
-      // Mobile Menu
+      // Mobile Menu Toggle
       const menuBtn = document.getElementById('menu-btn');
       const mobileMenu = document.getElementById('mobile-menu');
       if (menuBtn && mobileMenu) {
