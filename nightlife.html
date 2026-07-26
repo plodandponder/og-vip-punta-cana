@@ -55,24 +55,10 @@
 
 
 
-  <!-- Hidden Google Translate Engine -->
-  <div id="google_translate_element" style="display:none;"></div>
-  <style>
-    .goog-te-banner-frame, .skiptranslate, #goog-gt-tt, .goog-te-balloon-frame { display: none !important; }
-    body { top: 0px !important; }
-    .goog-text-highlight { background-color: transparent !important; box-shadow: none !important; }
-  </style>
-  <script type="text/javascript">
-    function googleTranslateElementInit() {
-      new google.translate.TranslateElement({
-        pageLanguage: 'en',
-        includedLanguages: 'en,es,fr,de,it',
-        autoDisplay: false
-      }, 'google_translate_element');
-    }
-  </script>
+  
   <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-  <!-- Persistent Currency & Language Switcher Script -->
+  
+<!-- Persistent Currency, Language & Auto-Detection Script -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const rates = { USD: 1.0, EUR: 0.92, CAD: 1.37, GBP: 0.78, DOP: 60.0 };
@@ -99,6 +85,75 @@
         if (parts.length === 2) return parts.pop().split(';').shift();
       };
 
+      // --- AUTO-DETECTION ENGINE ---
+      const hasManualOverride = localStorage.getItem('og_vip_manual_override') === 'true';
+
+      if (!hasManualOverride) {
+        const userLang = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
+        const timeZone = (Intl.DateTimeFormat().resolvedOptions().timeZone || '').toLowerCase();
+
+        // 1. System Language Detection
+        let detectedLang = 'en';
+        if (userLang.startsWith('es')) detectedLang = 'es';
+        else if (userLang.startsWith('fr')) detectedLang = 'fr';
+        else if (userLang.startsWith('de')) detectedLang = 'de';
+        else if (userLang.startsWith('it')) detectedLang = 'it';
+
+        // 2. System Location & Currency Detection
+        let detectedCurrency = 'USD';
+        if (userLang.includes('-ca') || userLang === 'fr-ca' || timeZone.includes('toronto') || timeZone.includes('vancouver') || timeZone.includes('montreal')) {
+          detectedCurrency = 'CAD';
+        } else if (userLang.includes('-gb') || userLang === 'en-gb' || timeZone.includes('london')) {
+          detectedCurrency = 'GBP';
+        } else if (userLang.includes('-do') || timeZone.includes('santo_domingo')) {
+          detectedCurrency = 'DOP';
+          detectedLang = 'es';
+        } else if (['de', 'it'].some(l => userLang.startsWith(l)) || userLang === 'fr-fr' || userLang === 'es-es' || timeZone.includes('europe') || timeZone.includes('berlin') || timeZone.includes('paris') || timeZone.includes('rome') || timeZone.includes('madrid')) {
+          detectedCurrency = 'EUR';
+        }
+
+        // Apply instant client-side defaults if not already stored
+        if (!localStorage.getItem('og_vip_currency')) {
+          localStorage.setItem('og_vip_currency', detectedCurrency);
+        }
+        if (!getCookie('googtrans') && detectedLang !== 'en') {
+          setGoogleTranslateCookie(detectedLang);
+        }
+
+        // 3. IP Location Refinement (Runs once on first visit)
+        if (!localStorage.getItem('og_vip_ip_checked')) {
+          fetch('https://ipapi.co/json/')
+            .then(res => res.json())
+            .then(data => {
+              localStorage.setItem('og_vip_ip_checked', 'true');
+              if (data && data.country_code) {
+                const cc = data.country_code;
+                let ipCurr = 'USD';
+                let ipLang = 'en';
+
+                if (cc === 'DO') { ipCurr = 'DOP'; ipLang = 'es'; }
+                else if (cc === 'CA') { ipCurr = 'CAD'; }
+                else if (cc === 'GB') { ipCurr = 'GBP'; }
+                else if (['DE', 'FR', 'IT', 'ES', 'AT', 'BE', 'NL', 'IE', 'PT', 'FI', 'GR'].includes(cc)) {
+                  ipCurr = 'EUR';
+                  if (['DE', 'FR', 'IT', 'ES'].includes(cc)) ipLang = cc.toLowerCase();
+                }
+
+                const currentSaved = localStorage.getItem('og_vip_currency');
+                if (currentSaved !== ipCurr) {
+                  localStorage.setItem('og_vip_currency', ipCurr);
+                  if (ipLang !== 'en') setGoogleTranslateCookie(ipLang);
+                  location.reload();
+                }
+              }
+            })
+            .catch(() => {
+              localStorage.setItem('og_vip_ip_checked', 'true');
+            });
+        }
+      }
+
+      // --- RENDER & RECOVERY ---
       let activeCurrency = localStorage.getItem('og_vip_currency') || 'USD';
       const currentTrans = getCookie('googtrans');
       let activeLang = 'en';
@@ -137,9 +192,11 @@
 
       updatePrices(activeCurrency);
 
+      // --- USER EVENT HANDLERS (Flags manual override) ---
       if (currencySelect) {
         currencySelect.addEventListener('change', (e) => {
           const newCurr = e.target.value;
+          localStorage.setItem('og_vip_manual_override', 'true');
           localStorage.setItem('og_vip_currency', newCurr);
           updatePrices(newCurr);
 
@@ -158,6 +215,7 @@
       if (langSelect) {
         langSelect.addEventListener('change', (e) => {
           const newLang = e.target.value;
+          localStorage.setItem('og_vip_manual_override', 'true');
           setGoogleTranslateCookie(newLang);
 
           let targetCurr = langToCurrency[newLang];
@@ -172,6 +230,7 @@
         });
       }
 
+      // Mobile Menu Toggle
       const menuBtn = document.getElementById('menu-btn');
       const mobileMenu = document.getElementById('mobile-menu');
       if (menuBtn && mobileMenu) {
