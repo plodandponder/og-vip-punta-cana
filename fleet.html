@@ -61,7 +61,8 @@
   
   <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
   
-<!-- Persistent Currency, Language & Auto-Detection Script -->
+
+<!-- Persistent Currency, Language, URL Tracking & Auto-Detection Script -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const rates = { USD: 1.0, EUR: 0.92, CAD: 1.37, GBP: 0.78, DOP: 60.0 };
@@ -88,88 +89,91 @@
         if (parts.length === 2) return parts.pop().split(';').shift();
       };
 
-      // --- AUTO-DETECTION ENGINE ---
-      const hasManualOverride = localStorage.getItem('og_vip_manual_override') === 'true';
+      const validLangs = ['en', 'es', 'fr', 'de', 'it'];
+      const validCurrs = ['USD', 'EUR', 'CAD', 'GBP', 'DOP'];
 
-      if (!hasManualOverride) {
+      // 1. Read URL Parameters
+      const urlParams = new URLSearchParams(window.location.search);
+      let urlLang = urlParams.get('lang')?.toLowerCase();
+      let urlCurr = urlParams.get('curr')?.toUpperCase();
+
+      if (!validLangs.includes(urlLang)) urlLang = null;
+      if (!validCurrs.includes(urlCurr)) urlCurr = null;
+
+      // 2. Determine Active State Priority (URL > Cookie/localStorage > Auto-Detect)
+      let activeLang = urlLang;
+      let activeCurr = urlCurr;
+
+      if (urlLang || urlCurr) {
+        localStorage.setItem('og_vip_manual_override', 'true');
+        if (urlLang) setGoogleTranslateCookie(urlLang);
+        if (urlCurr) localStorage.setItem('og_vip_currency', urlCurr);
+      }
+
+      if (!activeLang) {
+        const currentTrans = getCookie('googtrans');
+        if (currentTrans) {
+          const code = currentTrans.split('/').pop();
+          if (validLangs.includes(code)) activeLang = code;
+        }
+      }
+
+      if (!activeCurr) {
+        activeCurr = localStorage.getItem('og_vip_currency');
+      }
+
+      // Auto-Detection Fallback
+      const hasManualOverride = localStorage.getItem('og_vip_manual_override') === 'true';
+      if ((!activeLang || !activeCurr) && !hasManualOverride) {
         const userLang = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
         const timeZone = (Intl.DateTimeFormat().resolvedOptions().timeZone || '').toLowerCase();
 
-        // 1. System Language Detection
-        let detectedLang = 'en';
-        if (userLang.startsWith('es')) detectedLang = 'es';
-        else if (userLang.startsWith('fr')) detectedLang = 'fr';
-        else if (userLang.startsWith('de')) detectedLang = 'de';
-        else if (userLang.startsWith('it')) detectedLang = 'it';
-
-        // 2. System Location & Currency Detection
-        let detectedCurrency = 'USD';
-        if (userLang.includes('-ca') || userLang === 'fr-ca' || timeZone.includes('toronto') || timeZone.includes('vancouver') || timeZone.includes('montreal')) {
-          detectedCurrency = 'CAD';
-        } else if (userLang.includes('-gb') || userLang === 'en-gb' || timeZone.includes('london')) {
-          detectedCurrency = 'GBP';
-        } else if (userLang.includes('-do') || timeZone.includes('santo_domingo')) {
-          detectedCurrency = 'DOP';
-          detectedLang = 'es';
-        } else if (['de', 'it'].some(l => userLang.startsWith(l)) || userLang === 'fr-fr' || userLang === 'es-es' || timeZone.includes('europe') || timeZone.includes('berlin') || timeZone.includes('paris') || timeZone.includes('rome') || timeZone.includes('madrid')) {
-          detectedCurrency = 'EUR';
+        if (!activeLang) {
+          if (userLang.startsWith('es')) activeLang = 'es';
+          else if (userLang.startsWith('fr')) activeLang = 'fr';
+          else if (userLang.startsWith('de')) activeLang = 'de';
+          else if (userLang.startsWith('it')) activeLang = 'it';
+          else activeLang = 'en';
         }
 
-        // Apply instant client-side defaults if not already stored
-        if (!localStorage.getItem('og_vip_currency')) {
-          localStorage.setItem('og_vip_currency', detectedCurrency);
-        }
-        if (!getCookie('googtrans') && detectedLang !== 'en') {
-          setGoogleTranslateCookie(detectedLang);
-        }
-
-        // 3. IP Location Refinement (Runs once on first visit)
-        if (!localStorage.getItem('og_vip_ip_checked')) {
-          fetch('https://ipapi.co/json/')
-            .then(res => res.json())
-            .then(data => {
-              localStorage.setItem('og_vip_ip_checked', 'true');
-              if (data && data.country_code) {
-                const cc = data.country_code;
-                let ipCurr = 'USD';
-                let ipLang = 'en';
-
-                if (cc === 'DO') { ipCurr = 'DOP'; ipLang = 'es'; }
-                else if (cc === 'CA') { ipCurr = 'CAD'; }
-                else if (cc === 'GB') { ipCurr = 'GBP'; }
-                else if (['DE', 'FR', 'IT', 'ES', 'AT', 'BE', 'NL', 'IE', 'PT', 'FI', 'GR'].includes(cc)) {
-                  ipCurr = 'EUR';
-                  if (['DE', 'FR', 'IT', 'ES'].includes(cc)) ipLang = cc.toLowerCase();
-                }
-
-                const currentSaved = localStorage.getItem('og_vip_currency');
-                if (currentSaved !== ipCurr) {
-                  localStorage.setItem('og_vip_currency', ipCurr);
-                  if (ipLang !== 'en') setGoogleTranslateCookie(ipLang);
-                  location.reload();
-                }
-              }
-            })
-            .catch(() => {
-              localStorage.setItem('og_vip_ip_checked', 'true');
-            });
+        if (!activeCurr) {
+          if (userLang.includes('-ca') || userLang === 'fr-ca' || timeZone.includes('toronto') || timeZone.includes('vancouver') || timeZone.includes('montreal')) activeCurr = 'CAD';
+          else if (userLang.includes('-gb') || userLang === 'en-gb' || timeZone.includes('london')) activeCurr = 'GBP';
+          else if (userLang.includes('-do') || timeZone.includes('santo_domingo')) { activeCurr = 'DOP'; activeLang = 'es'; }
+          else if (['de', 'it'].some(l => userLang.startsWith(l)) || userLang === 'fr-fr' || userLang === 'es-es' || timeZone.includes('europe')) activeCurr = 'EUR';
+          else activeCurr = 'USD';
         }
       }
 
-      // --- RENDER & RECOVERY ---
-      let activeCurrency = localStorage.getItem('og_vip_currency') || 'USD';
-      const currentTrans = getCookie('googtrans');
-      let activeLang = 'en';
-      if (currentTrans) {
-        const langCode = currentTrans.split('/').pop();
-        if (['en', 'es', 'fr', 'de', 'it'].includes(langCode)) {
-          activeLang = langCode;
-        }
-      }
+      // Apply Defaults
+      activeLang = activeLang || 'en';
+      activeCurr = activeCurr || 'USD';
 
-      if (currencySelect) currencySelect.value = activeCurrency;
+      localStorage.setItem('og_vip_currency', activeCurr);
+
+      if (currencySelect) currencySelect.value = activeCurr;
       if (langSelect) langSelect.value = activeLang;
 
+      // 3. Update Address Bar URL
+      const currentUrl = new URL(window.location.href);
+      currentUrl.searchParams.set('lang', activeLang);
+      currentUrl.searchParams.set('curr', activeCurr);
+      window.history.replaceState({}, '', currentUrl.toString());
+
+      // 4. Dynamically Attach Query Params to all Navigation Links
+      document.querySelectorAll('a[href]').forEach(a => {
+        const href = a.getAttribute('href');
+        if (href && !href.startsWith('http') && !href.startsWith('https://wa.me') && !href.startsWith('#') && !href.startsWith('mailto:')) {
+          try {
+            const linkUrl = new URL(href, window.location.origin);
+            linkUrl.searchParams.set('lang', activeLang);
+            linkUrl.searchParams.set('curr', activeCurr);
+            a.setAttribute('href', linkUrl.pathname + linkUrl.search + linkUrl.hash);
+          } catch(e) {}
+        }
+      });
+
+      // 5. Price Rendering
       const updatePrices = (curr) => {
         const rate = rates[curr] || 1.0;
         const sym = symbols[curr] || '$';
@@ -193,28 +197,30 @@
         });
       };
 
-      updatePrices(activeCurrency);
+      updatePrices(activeCurr);
 
-      // --- USER EVENT HANDLERS (Flags manual override) ---
+      // 6. Currency Dropdown Handler with URL Redirect
       if (currencySelect) {
         currencySelect.addEventListener('change', (e) => {
           const newCurr = e.target.value;
           localStorage.setItem('og_vip_manual_override', 'true');
           localStorage.setItem('og_vip_currency', newCurr);
-          updatePrices(newCurr);
 
           let targetLang = currencyToLang[newCurr];
           if (newCurr === 'CAD' && activeLang === 'fr') targetLang = 'fr';
           if (newCurr === 'EUR' && ['fr', 'it', 'de', 'es'].includes(activeLang)) targetLang = activeLang;
 
-          if (langSelect && activeLang !== targetLang) {
-            langSelect.value = targetLang;
-            setGoogleTranslateCookie(targetLang);
-            location.reload();
-          }
+          targetLang = targetLang || activeLang;
+          setGoogleTranslateCookie(targetLang);
+
+          const redirectUrl = new URL(window.location.href);
+          redirectUrl.searchParams.set('lang', targetLang);
+          redirectUrl.searchParams.set('curr', newCurr);
+          window.location.href = redirectUrl.toString();
         });
       }
 
+      // 7. Language Dropdown Handler with URL Redirect
       if (langSelect) {
         langSelect.addEventListener('change', (e) => {
           const newLang = e.target.value;
@@ -222,14 +228,16 @@
           setGoogleTranslateCookie(newLang);
 
           let targetCurr = langToCurrency[newLang];
-          if (newLang === 'fr' && activeCurrency === 'CAD') targetCurr = 'CAD';
-          if (newLang === 'en' && ['CAD', 'GBP'].includes(activeCurrency)) targetCurr = activeCurrency;
+          if (newLang === 'fr' && activeCurr === 'CAD') targetCurr = 'CAD';
+          if (newLang === 'en' && ['CAD', 'GBP'].includes(activeCurr)) targetCurr = activeCurr;
 
-          if (targetCurr) {
-            localStorage.setItem('og_vip_currency', targetCurr);
-          }
+          targetCurr = targetCurr || activeCurr;
+          localStorage.setItem('og_vip_currency', targetCurr);
 
-          location.reload();
+          const redirectUrl = new URL(window.location.href);
+          redirectUrl.searchParams.set('lang', newLang);
+          redirectUrl.searchParams.set('curr', targetCurr);
+          window.location.href = redirectUrl.toString();
         });
       }
 
