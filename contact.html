@@ -59,7 +59,25 @@
   <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
   
 
-<!-- Persistent Currency, Language, URL Tracking & Auto-Detection Script -->
+
+  <!-- Hidden Google Translate Engine -->
+  <div id="google_translate_element" style="display:none;"></div>
+  <style>
+    iframe.goog-te-banner-frame, .goog-te-banner-frame, #goog-gt-tt, .goog-te-balloon-frame { display: none !important; }
+    body { top: 0px !important; position: static !important; }
+    .goog-text-highlight { background-color: transparent !important; box-shadow: none !important; }
+  </style>
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'en',
+        includedLanguages: 'en,es,fr,de,it',
+        autoDisplay: false
+      }, 'google_translate_element');
+    }
+  </script>
+  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  <!-- Persistent Currency, Language & URL Tracking Engine -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const rates = { USD: 1.0, EUR: 0.92, CAD: 1.37, GBP: 0.78, DOP: 60.0 };
@@ -97,7 +115,6 @@
       if (!validLangs.includes(urlLang)) urlLang = null;
       if (!validCurrs.includes(urlCurr)) urlCurr = null;
 
-      // 2. Determine Active State Priority (URL > Cookie/localStorage > Auto-Detect)
       let activeLang = urlLang;
       let activeCurr = urlCurr;
 
@@ -119,7 +136,7 @@
         activeCurr = localStorage.getItem('og_vip_currency');
       }
 
-      // Auto-Detection Fallback
+      // 2. Auto-Detection Fallback
       const hasManualOverride = localStorage.getItem('og_vip_manual_override') === 'true';
       if ((!activeLang || !activeCurr) && !hasManualOverride) {
         const userLang = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
@@ -142,7 +159,6 @@
         }
       }
 
-      // Apply Defaults
       activeLang = activeLang || 'en';
       activeCurr = activeCurr || 'USD';
 
@@ -151,13 +167,13 @@
       if (currencySelect) currencySelect.value = activeCurr;
       if (langSelect) langSelect.value = activeLang;
 
-      // 3. Update Address Bar URL
+      // 3. Update Address Bar URL without refresh loops
       const currentUrl = new URL(window.location.href);
       currentUrl.searchParams.set('lang', activeLang);
       currentUrl.searchParams.set('curr', activeCurr);
       window.history.replaceState({}, '', currentUrl.toString());
 
-      // 4. Dynamically Attach Query Params to all Navigation Links
+      // 4. Attach Query Params to Link hrefs
       document.querySelectorAll('a[href]').forEach(a => {
         const href = a.getAttribute('href');
         if (href && !href.startsWith('http') && !href.startsWith('https://wa.me') && !href.startsWith('#') && !href.startsWith('mailto:')) {
@@ -170,7 +186,7 @@
         }
       });
 
-      // 5. Price Rendering
+      // 5. Render Converted Prices
       const updatePrices = (curr) => {
         const rate = rates[curr] || 1.0;
         const sym = symbols[curr] || '$';
@@ -196,7 +212,7 @@
 
       updatePrices(activeCurr);
 
-      // 6. Currency Dropdown Handler with URL Redirect
+      // 6. Currency Change Handler
       if (currencySelect) {
         currencySelect.addEventListener('change', (e) => {
           const newCurr = e.target.value;
@@ -217,7 +233,7 @@
         });
       }
 
-      // 7. Language Dropdown Handler with URL Redirect
+      // 7. Language Change Handler
       if (langSelect) {
         langSelect.addEventListener('change', (e) => {
           const newLang = e.target.value;
@@ -238,7 +254,7 @@
         });
       }
 
-      // Mobile Menu Toggle
+      // Mobile Menu
       const menuBtn = document.getElementById('menu-btn');
       const mobileMenu = document.getElementById('mobile-menu');
       if (menuBtn && mobileMenu) {
