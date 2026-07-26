@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nightlife Concierge & VIP Logistics | OG VIP Punta Cana</title>
+  <title>Nightlife Concierge | OG VIP Punta Cana</title>
+  <link rel="icon" type="image/webp" href="favicon.webp">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -22,7 +23,7 @@
 </head>
 <body class="bg-brandDark text-white font-sans antialiased selection:bg-brandGold selection:text-black">
 
-  <!-- Navigation -->
+  <!-- Header / Navigation -->
   <header class="border-b border-neutral-800 bg-black/80 backdrop-blur sticky top-0 z-50">
     <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
       <div class="flex items-center gap-2">
@@ -36,72 +37,84 @@
         <a href="fleet.html" class="hover:text-brandGold transition">Fleet</a>
         <a href="rates.html" class="hover:text-brandGold transition">Rates</a>
         <a href="nightlife.html" class="text-brandGold">Nightlife Concierge</a>
-        <a href="contact.html" class="hover:text-brandGold transition">Contact</a>
+        <a href="contact.html" class="hover:text-neutral-300 transition">Contact</a>
       </nav>
 
-      <a href="https://wa.me/?text=I%20want%20to%20book%20a%20Nightlife%20Package" target="_blank" class="bg-brandGold text-black font-extrabold text-sm px-5 py-2.5 rounded-lg hover:bg-yellow-400 transition shadow-lg shadow-yellow-500/10">
+      <a href="https://wa.me/?text=I%20want%20to%20book%20nightlife%20concierge%20services" target="_blank" class="bg-brandGold text-black font-extrabold text-sm px-5 py-2.5 rounded-lg hover:bg-yellow-400 transition shadow-lg shadow-yellow-500/10">
         WhatsApp Concierge
       </a>
     </div>
   </header>
 
-  <!-- Header Banner -->
-  <section class="max-w-6xl mx-auto px-6 pt-16 pb-12 border-b border-neutral-800">
-    <div class="text-xs font-bold text-brandGold uppercase tracking-widest mb-2">24/7 Logistics & Nightlife</div>
-    <h1 class="text-4xl md:text-6xl font-black tracking-tight mb-4">
-      Own The Night.<br>
-      <span class="text-brandGold">Dedicated Chauffeurs & Villa Logistics.</span>
-    </h1>
-    <p class="text-neutral-400 text-lg max-w-2xl leading-relaxed">
-      Don't get stranded at the club at 3:00 AM. We provide private drivers on standby, club door coordination, and full group transport across Bávaro & Cap Cana.
+  <!-- Page Header -->
+  <section class="max-w-6xl mx-auto px-6 pt-16 pb-8">
+    <h1 class="text-5xl font-black tracking-tight mb-4">Nightlife & <span class="text-brandGold">VIP Concierge</span></h1>
+    <p class="text-neutral-400 text-lg max-w-2xl">
+      From private villa-to-club transport to VIP table bookings and bottle service coordination across Punta Cana's top venues.
     </p>
   </section>
 
+  <!-- Nightlife Banner Image -->
+  <div class="max-w-6xl mx-auto px-6 mb-16">
+    <div class="relative rounded-2xl overflow-hidden border border-brandGold/30 shadow-2xl shadow-yellow-500/5 bg-neutral-900">
+      <img src="nightlife-club.webp" alt="OG VIP Nightlife Bottle Service" class="w-full h-[400px] md:h-[500px] object-cover object-center">
+      <div class="absolute inset-0 bg-gradient-to-t from-brandDark via-transparent to-transparent"></div>
+    </div>
+  </div>
+
   <!-- Services Grid -->
-  <section class="max-w-6xl mx-auto px-6 py-16 grid md:grid-cols-3 gap-8">
-    
-    <!-- Service 1 -->
-    <div class="bg-brandCard border border-neutral-800 rounded-2xl p-6 flex flex-col justify-between hover:border-brandGold/40 transition">
-      <div>
-        <div class="text-xs font-bold text-brandGold uppercase tracking-widest mb-2">24/7 Transport</div>
-        <h3 class="text-2xl font-black mb-3">On-Call Driver Package</h3>
-        <p class="text-neutral-400 text-sm leading-relaxed mb-6">
-          Keep a private black SUV or Sprinter on call around the clock. Your driver waits outside while your group parties. One WhatsApp message and your ride is at the door.
-        </p>
+  <section class="max-w-6xl mx-auto px-6 py-8 mb-16 border-t border-neutral-800/80">
+    <div class="grid md:grid-cols-2 gap-8">
+      
+      <div class="bg-brandCard border border-neutral-800 rounded-2xl p-8 flex flex-col justify-between">
+        <div>
+          <div class="text-xs font-bold text-brandGold uppercase tracking-widest mb-2">24/7 On-Call Chauffeur</div>
+          <h2 class="text-3xl font-extrabold mb-4">Nightlife Day Rate Package</h2>
+          <p class="text-neutral-400 leading-relaxed mb-6">
+            Your private driver remains on-call throughout the evening. Perfect for bachelor parties, group bar hopping, and seamless late-night transfers back to your villa or resort.
+          </p>
+          <ul class="space-y-2 text-sm text-neutral-300 mb-8">
+            <li class="flex items-center gap-2">✔ Unlimited villa-to-club hops</li>
+            <li class="flex items-center gap-2">✔ Dedicated bilingual driver keeping watch</li>
+            <li class="flex items-center gap-2">✔ Zero waiting in line for random taxis at 3 AM</li>
+          </ul>
+        </div>
+        <div class="border-t border-neutral-800 pt-6 flex justify-between items-center">
+          <div>
+            <span class="text-xs text-neutral-500 block">Full Day / Night Rate</span>
+            <span class="text-2xl font-black text-white">$300 / day</span>
+          </div>
+          <a href="https://wa.me/?text=I%20want%20to%20book%20the%2024%2F7%20Nightlife%20Chauffeur%20Package" target="_blank" class="bg-brandGold text-black font-extrabold px-6 py-3 rounded-xl hover:bg-yellow-400 transition text-sm">
+            Book Package
+          </a>
+        </div>
       </div>
-      <a href="https://wa.me/?text=I%20want%20the%20On-Call%20Driver%20Package" target="_blank" class="bg-neutral-900 border border-neutral-700 text-white font-bold py-3 rounded-xl text-center hover:bg-brandGold hover:text-black transition text-sm">
-        Book On-Call Chauffeur
-      </a>
-    </div>
 
-    <!-- Service 2 -->
-    <div class="bg-brandCard border border-brandGold/50 rounded-2xl p-6 flex flex-col justify-between shadow-lg shadow-yellow-500/5">
-      <div>
-        <div class="text-xs font-bold text-brandGold uppercase tracking-widest mb-2">Day & Night Packages</div>
-        <h3 class="text-2xl font-black mb-3">Private Catamaran Charters</h3>
-        <p class="text-neutral-400 text-sm leading-relaxed mb-6">
-          Private high-output party catamaran charters for bachelor trips and large groups. Complete with open bar, DJ setup, snorkeling gear, and direct Sprinter transfer to the marina.
-        </p>
+      <div class="bg-brandCard border border-brandGold/50 rounded-2xl p-8 flex flex-col justify-between shadow-lg shadow-yellow-500/5">
+        <div>
+          <div class="text-xs font-bold text-brandGold uppercase tracking-widest mb-2">Table & Bottle Service</div>
+          <h2 class="text-3xl font-extrabold mb-4">VIP Club Access</h2>
+          <p class="text-neutral-400 leading-relaxed mb-6">
+            Skip the general admission lines. We coordinate directly with top-tier clubs and lounges in Punta Cana to lock down prime tables, premium liquor selection, and VIP entry.
+          </p>
+          <ul class="space-y-2 text-sm text-neutral-300 mb-8">
+            <li class="flex items-center gap-2">✔ Priority entry with zero hassle</li>
+            <li class="flex items-center gap-2">✔ Premium tequila, whiskey, and champagne setup</li>
+            <li class="flex items-center gap-2">✔ Direct coordination via WhatsApp concierge</li>
+          </ul>
+        </div>
+        <div class="border-t border-neutral-800 pt-6 flex justify-between items-center">
+          <div>
+            <span class="text-xs text-neutral-500 block">Custom Itineraries</span>
+            <span class="text-2xl font-black text-brandGold">Inquire</span>
+          </div>
+          <a href="https://wa.me/?text=I%20want%20to%20arrange%20VIP%20club%20tables%20and%20bottle%20service" target="_blank" class="bg-brandGold text-black font-extrabold px-6 py-3 rounded-xl hover:bg-yellow-400 transition text-sm">
+            Plan Night Out
+          </a>
+        </div>
       </div>
-      <a href="https://wa.me/?text=I%20want%20a%20Private%20Catamaran%20Charter" target="_blank" class="bg-brandGold text-black font-extrabold py-3 rounded-xl text-center hover:bg-yellow-400 transition text-sm">
-        Inquire Catamaran Charter
-      </a>
-    </div>
 
-    <!-- Service 3 -->
-    <div class="bg-brandCard border border-neutral-800 rounded-2xl p-6 flex flex-col justify-between hover:border-brandGold/40 transition">
-      <div>
-        <div class="text-xs font-bold text-brandGold uppercase tracking-widest mb-2">Group Logistics</div>
-        <h3 class="text-2xl font-black mb-3">Villa Pre-Stocking</h3>
-        <p class="text-neutral-400 text-sm leading-relaxed mb-6">
-          Arrive at your villa with refrigerators fully stocked. Premium spirits, local beers, mixers, and ice loaded before your flight even touches down at PUJ.
-        </p>
-      </div>
-      <a href="https://wa.me/?text=I%20want%20Villa%20Pre-Stocking" target="_blank" class="bg-neutral-900 border border-neutral-700 text-white font-bold py-3 rounded-xl text-center hover:bg-brandGold hover:text-black transition text-sm">
-        Request Pre-Stocking
-      </a>
     </div>
-
   </section>
 
   <!-- Footer -->
