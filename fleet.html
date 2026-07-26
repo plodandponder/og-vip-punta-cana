@@ -118,7 +118,7 @@
         <div class="border-t border-neutral-800 pt-6 flex justify-between items-center">
           <div>
             <span class="text-xs text-neutral-500 block">Airport Transfer</span>
-            <span class="text-2xl font-black text-white">Starting at <span data-usd-min="70" data-usd-max="90">$70 – $90</span></span>
+            <span class="text-2xl font-black text-white"><span data-usd-min="70" data-usd-max="90">$70 - $90+</span></span>
           </div>
           <a href="https://wa.me/18099283711?text=I%20want%20to%20book%20an%20Executive%20SUV" target="_blank" class="bg-brandGold text-black font-extrabold px-6 py-3 rounded-xl hover:bg-yellow-400 transition text-sm">
             Book SUV
@@ -143,7 +143,7 @@
         <div class="border-t border-neutral-800 pt-6 flex justify-between items-center">
           <div>
             <span class="text-xs text-neutral-500 block">Airport Transfer</span>
-            <span class="text-2xl font-black text-brandGold">Starting at <span data-usd-min="150" data-usd-max="220">$150 – $220</span></span>
+            <span class="text-2xl font-black text-brandGold"><span data-usd-min="150" data-usd-max="220">$150 - $220+</span></span>
           </div>
           <a href="https://wa.me/18099283711?text=I%20want%20to%20book%20a%20Mercedes%20Sprinter" target="_blank" class="bg-brandGold text-black font-extrabold px-6 py-3 rounded-xl hover:bg-yellow-400 transition text-sm">
             Book Sprinter
@@ -192,7 +192,7 @@
             if (!isNaN(minVal) && !isNaN(maxVal)) {
               const convMin = Math.round(minVal * rate);
               const convMax = Math.round(maxVal * rate);
-              el.textContent = `${symbol}${convMin.toLocaleString()} – ${symbol}${convMax.toLocaleString()}`;
+              el.textContent = `${symbol}${convMin.toLocaleString()} - ${symbol}${convMax.toLocaleString()}+`;
             }
           });
 
