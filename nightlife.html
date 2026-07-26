@@ -24,25 +24,46 @@
 <body class="bg-brandDark text-white font-sans antialiased selection:bg-brandGold selection:text-black">
 
   <!-- Header / Navigation -->
-  <header class="border-b border-neutral-800 bg-black/80 backdrop-blur sticky top-0 z-50">
+    <!-- Header / Navigation -->
+  <header class="border-b border-neutral-800 bg-black/90 backdrop-blur sticky top-0 z-50">
     <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
       <div class="flex items-center gap-2">
         <a href="index.html" class="text-2xl font-black tracking-widest text-brandGold">OG VIP</a>
         <span class="text-xs uppercase bg-neutral-800 text-neutral-400 px-2 py-0.5 rounded font-mono">DR</span>
       </div>
       
+      <!-- Desktop Navigation -->
       <nav class="hidden md:flex gap-6 text-sm font-semibold text-neutral-300">
         <a href="index.html" class="hover:text-brandGold transition">Home</a>
         <a href="about.html" class="hover:text-brandGold transition">About</a>
         <a href="fleet.html" class="hover:text-brandGold transition">Fleet</a>
         <a href="rates.html" class="hover:text-brandGold transition">Rates</a>
         <a href="nightlife.html" class="text-brandGold">Nightlife Concierge</a>
-        <a href="contact.html" class="hover:text-neutral-300 transition">Contact</a>
+        <a href="contact.html" class="hover:text-brandGold transition">Contact</a>
       </nav>
 
-      <a href="https://wa.me/?text=I%20want%20to%20book%20nightlife%20concierge%20services" target="_blank" class="bg-brandGold text-black font-extrabold text-sm px-5 py-2.5 rounded-lg hover:bg-yellow-400 transition shadow-lg shadow-yellow-500/10">
-        WhatsApp Concierge
-      </a>
+      <div class="flex items-center gap-3">
+        <a href="https://wa.me/?text=I%20want%20to%20book%20a%20VIP%20transfer" target="_blank" class="bg-brandGold text-black font-extrabold text-xs sm:text-sm px-4 sm:px-5 py-2.5 rounded-lg hover:bg-yellow-400 transition shadow-lg shadow-yellow-500/10">
+          WhatsApp Concierge
+        </a>
+
+        <!-- Mobile Hamburger Button -->
+        <button id="menu-btn" class="md:hidden text-neutral-300 hover:text-brandGold focus:outline-none p-2 rounded-lg bg-neutral-900 border border-neutral-800" aria-label="Toggle Navigation">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Dropdown Menu -->
+    <div id="mobile-menu" class="hidden md:hidden border-t border-neutral-800 bg-black/95 px-6 py-4 flex flex-col gap-3 text-base font-semibold text-neutral-300">
+      <a href="index.html" class="hover:text-brandGold transition py-2 border-b border-neutral-900">Home</a>
+      <a href="about.html" class="hover:text-brandGold transition py-2 border-b border-neutral-900">About</a>
+      <a href="fleet.html" class="hover:text-brandGold transition py-2 border-b border-neutral-900">Fleet</a>
+      <a href="rates.html" class="hover:text-brandGold transition py-2 border-b border-neutral-900">Rates</a>
+      <a href="nightlife.html" class="text-brandGold py-2 border-b border-neutral-900">Nightlife Concierge</a>
+      <a href="contact.html" class="hover:text-brandGold transition py-2 border-b border-neutral-900">Contact</a>
     </div>
   </header>
 
@@ -132,5 +153,18 @@
     </div>
   </footer>
 
+
+  <!-- Mobile Menu Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const menuBtn = document.getElementById('menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+      if (menuBtn && mobileMenu) {
+        menuBtn.addEventListener('click', () => {
+          mobileMenu.classList.toggle('hidden');
+        });
+      }
+    });
+  </script>
 </body>
 </html>
