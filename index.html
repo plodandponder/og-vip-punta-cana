@@ -27,13 +27,14 @@
 
   <!-- Header / Navigation -->
     <!-- Header / Navigation -->
+    <!-- Header / Navigation -->
   <header class="border-b border-neutral-800 bg-black/90 backdrop-blur sticky top-0 z-50">
-    <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
       <div class="flex items-center gap-2">
         <a href="index.html" class="text-2xl font-black tracking-widest text-brandGold">OG VIP</a>
         <span class="text-xs uppercase bg-neutral-800 text-neutral-400 px-2 py-0.5 rounded font-mono">DR</span>
       </div>
-      
+
       <!-- Desktop Navigation -->
       <nav class="hidden md:flex gap-6 text-sm font-semibold text-neutral-300">
         <a href="index.html" class="text-brandGold">Home</a>
@@ -44,9 +45,18 @@
         <a href="contact.html" class="hover:text-brandGold transition">Contact</a>
       </nav>
 
-      <div class="flex items-center gap-3">
-        <a href="https://wa.me/18099283711?text=I%20want%20to%20book%20a%20VIP%20transfer" target="_blank" class="bg-brandGold text-black font-extrabold text-xs sm:text-sm px-4 sm:px-5 py-2.5 rounded-lg hover:bg-yellow-400 transition shadow-lg shadow-yellow-500/10">
-          WhatsApp Concierge
+      <!-- Always Visible Header Actions -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        <!-- Currency Selector -->
+        <select id="currency-select" class="bg-neutral-900 border border-neutral-800 text-brandGold text-xs font-bold rounded-lg px-2 py-1.5 focus:outline-none focus:border-brandGold cursor-pointer">
+          <option value="USD">USD ($)</option>
+          <option value="EUR">EUR (€)</option>
+          <option value="CAD">CAD (CA$)</option>
+          <option value="DOP">DOP (RD$)</option>
+        </select>
+
+        <a href="https://wa.me/18099283711?text=I%20want%20to%20book%20a%20VIP%20transfer" target="_blank" class="bg-brandGold text-black font-extrabold text-xs sm:text-sm px-3 sm:px-4 py-2 rounded-lg hover:bg-yellow-400 transition shadow-lg shadow-yellow-500/10 whitespace-nowrap">
+          WhatsApp
         </a>
 
         <!-- Mobile Hamburger Button -->
@@ -123,7 +133,7 @@
         </div>
         <div class="border-t border-neutral-800 pt-4 flex justify-between items-center">
           <span class="text-xs text-neutral-500">Starting at</span>
-          <span class="text-xl font-black text-white">$70 / ride</span>
+          <span class="text-xl font-black text-white">Starting at <span data-usd-min="70" data-usd-max="90">$70 – $90</span> / ride</span>
         </div>
       </div>
 
@@ -135,7 +145,7 @@
         </div>
         <div class="border-t border-neutral-800 pt-4 flex justify-between items-center">
           <span class="text-xs text-neutral-500">Starting at</span>
-          <span class="text-xl font-black text-brandGold">$150 / ride</span>
+          <span class="text-xl font-black text-brandGold">Starting at <span data-usd-min="150" data-usd-max="220">$150 – $220</span> / ride</span>
         </div>
       </div>
 
@@ -147,7 +157,7 @@
         </div>
         <div class="border-t border-neutral-800 pt-4 flex justify-between items-center">
           <span class="text-xs text-neutral-500">Day Rate</span>
-          <span class="text-xl font-black text-white">$300 / day</span>
+          <span class="text-xl font-black text-white">Starting at <span data-usd-min="300" data-usd-max="450">$300 – $450</span> / day</span>
         </div>
       </div>
     </div>
@@ -166,7 +176,7 @@
             <div class="text-xs text-neutral-500">Travel time: ~15 mins</div>
           </div>
           <div class="text-right">
-            <span class="text-xl font-black text-brandGold">$70</span>
+            Starting at <span data-usd-min="70" data-usd-max="90">$70 – $90</span>
             <div class="text-[10px] text-neutral-500">Luxury SUV</div>
           </div>
         </div>
@@ -177,7 +187,7 @@
             <div class="text-xs text-neutral-500">Travel time: ~25 mins</div>
           </div>
           <div class="text-right">
-            <span class="text-xl font-black text-brandGold">$75</span>
+            Starting at <span data-usd-min="75" data-usd-max="95">$75 – $95</span>
             <div class="text-[10px] text-neutral-500">Luxury SUV</div>
           </div>
         </div>
@@ -188,7 +198,7 @@
             <div class="text-xs text-neutral-500">Travel time: ~45 mins</div>
           </div>
           <div class="text-right">
-            <span class="text-xl font-black text-brandGold">$110</span>
+            Starting at <span data-usd-min="110" data-usd-max="140">$110 – $140</span>
             <div class="text-[10px] text-neutral-500">Luxury SUV</div>
           </div>
         </div>
@@ -229,9 +239,44 @@
   </footer>
 
 
-  <!-- Mobile Menu Script -->
+  
+
+  <!-- Currency Converter & Mobile Menu Script -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
+      const rates = { USD: 1.0, EUR: 0.92, CAD: 1.37, DOP: 60.0 };
+      const symbols = { USD: '$', EUR: '€', CAD: 'CA$', DOP: 'RD$ ' };
+      const currencySelect = document.getElementById('currency-select');
+
+      if (currencySelect) {
+        currencySelect.addEventListener('change', (e) => {
+          const selected = e.target.value;
+          const rate = rates[selected];
+          const symbol = symbols[selected];
+
+          // Dynamic range conversion
+          document.querySelectorAll('[data-usd-min]').forEach(el => {
+            const minVal = parseFloat(el.getAttribute('data-usd-min'));
+            const maxVal = parseFloat(el.getAttribute('data-usd-max'));
+            if (!isNaN(minVal) && !isNaN(maxVal)) {
+              const convMin = Math.round(minVal * rate);
+              const convMax = Math.round(maxVal * rate);
+              el.textContent = `${symbol}${convMin.toLocaleString()} – ${symbol}${convMax.toLocaleString()}`;
+            }
+          });
+
+          // Single value conversion
+          document.querySelectorAll('[data-usd]').forEach(el => {
+            const usdVal = parseFloat(el.getAttribute('data-usd'));
+            if (!isNaN(usdVal)) {
+              const converted = Math.round(usdVal * rate);
+              el.textContent = `${symbol}${converted.toLocaleString()}`;
+            }
+          });
+        });
+      }
+
+      // Mobile Menu Toggle
       const menuBtn = document.getElementById('menu-btn');
       const mobileMenu = document.getElementById('mobile-menu');
       if (menuBtn && mobileMenu) {
@@ -241,5 +286,6 @@
       }
     });
   </script>
+
 </body>
 </html>
